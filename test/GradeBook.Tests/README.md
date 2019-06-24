@@ -1,0 +1,1 @@
+A sample csharp project following the pluralsight course "C# Fundamentals".
