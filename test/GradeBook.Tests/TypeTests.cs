@@ -4,12 +4,39 @@ using Xunit;
 namespace GradeBook.Tests
 {
 
+    public delegate string WriteLogDelegate(string logMessage);
+
     public class TypeTests
     {
-
+        int count = 0;
 
         [Fact]
-        public void StringBehaveLikeValueTypes() {
+        public void WriteLogDelegateCanPointToMethod()
+        {
+            WriteLogDelegate log = ReturnMessage;
+
+            log += ReturnMessage;
+            log += IncrementCount;
+
+            var result = log("Hello!");
+            Assert.Equal(3, count);
+        }
+
+        private string IncrementCount(string message)
+        {
+            count++;
+            return message.ToLower();
+        }
+
+        private string ReturnMessage(string message)
+        {
+            count++;
+            return message;
+        }
+
+        [Fact]
+        public void StringBehaveLikeValueTypes()
+        {
             string name = "Scott";
             var upper = MakeUppercase(name);
 
@@ -32,9 +59,9 @@ namespace GradeBook.Tests
 
         }
 
-        private void GetBookSetName(ref Book book, string name)
+        private void GetBookSetName(ref InMemoryBook book, string name)
         {
-            book = new Book(name);
+            book = new InMemoryBook(name);
         }
 
 
@@ -48,9 +75,9 @@ namespace GradeBook.Tests
 
         }
 
-        private void GetBookSetName(Book book, string name)
+        private void GetBookSetName(InMemoryBook book, string name)
         {
-            book = new Book(name);
+            book = new InMemoryBook(name);
         }
 
         [Fact]
@@ -63,7 +90,7 @@ namespace GradeBook.Tests
 
         }
 
-        private void SetName(Book book1, string name)
+        private void SetName(InMemoryBook book1, string name)
         {
             book1.Name = name;
         }
@@ -87,9 +114,9 @@ namespace GradeBook.Tests
             Assert.True(Object.ReferenceEquals(book1, book2));
         }
 
-        private Book GetBook(string name)
+        private InMemoryBook GetBook(string name)
         {
-            return new Book(name);
+            return new InMemoryBook(name);
         }
     }
 }

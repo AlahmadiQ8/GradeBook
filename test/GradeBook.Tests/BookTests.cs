@@ -9,7 +9,7 @@ namespace GradeBook.Tests
         [Fact]
         public void BookCalculcatesStatistics()
         {
-            var book = new Book("My Grades");
+            var book = new InMemoryBook("My Grades");
             book.AddGrade(1);
             book.AddGrade(2);
             book.AddGrade(3);
